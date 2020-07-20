@@ -138,27 +138,7 @@ def combtw(vertex, edge_dict):
 
 btw_list = combtw(vertex, edge_dict)
 
-# btw_list = sc.parallelize(btw_list).map(lambda a: (a[1], tuple(sorted(a[0])))).sortByKey(ascending=False).map(lambda a: (a[1][0], (a[1][1],a[0]))).sortByKey().map(lambda a: ((a[0], a[1][0]), a[1][1])).collect()
-# btw_list = sc.parallelize(btw_list).map(lambda a: (tuple(sorted(a[0])), a[1])).map(lambda a: (a[0][0], (a[0][1],a[1]))).sortByKey().map(lambda a: (a[1][1], (a[0],a[1][0]))).sortByKey(ascending=False).map(lambda a: (tuple(a[1]),a[0])).collect()
-# sortByKey(ascending=False).map(lambda a: (a[1][0], (a[1][1],a[0]))).sortByKey().map(lambda a: ((a[0], a[1][0]), a[1][1])).collect()
 
-
-## community detection
-#btw_tuple already sorted from high to low, therefore remove from list one by on
-# def cut_high_edge(edge_dict, btw_tuple):
-#     edge = btw_tuple[0][0]
-#     print("I ma 222222222222222222222222222222222222222222222222222222",edge)
-#     if edge_dict[edge[0]] is not None:
-#         try:
-#             edge_dict[edge[0]].remove(edge[1])
-#         except ValueError:
-#             pass
-#     if edge_dict[edge[1]] is not None:
-#         try:
-#             edge_dict[edge[1]].remove(edge[0])
-#         except ValueError:
-#             pass 
-#     return edge_dict 
 
 def cut_high_edge(edge_dict, btw_tuple):
     b = [a for a in btw_tuple if a[1]==btw_tuple[0][1]]
@@ -206,25 +186,6 @@ def dectect_num_comm(vertex, new_tree_dict):
             queue.append(set(vertex).difference(explored).pop())
     return community
 
-# community = dectect_num_comm(vertex, new_tree_dict)
-
-# def compute_mod(community, n_edge_dict, edge_dict, m):
-#     mod_s = 0
-#     A = 0
-#     for one_comm in community:
-#         all_pair = itertools.combinations(list(one_comm),2)
-#         for pair in all_pair:
-#             ki = len(n_edge_dict[pair[0]])
-#             kj = len(n_edge_dict[pair[1]])
-#             # find A in original edge-dict
-#             if pair[1] in edge_dict[pair[0]] and pair[0] in edge_dict[pair[1]]:
-#                 A = 1
-#             else:
-#                 A = 0
-# #             print("I ma 222222222222222222222222222222222222222222222222222222",A)
-#             mod_s += float(A-ki*kj/(2*m))
-#     res = float(mod_s/(2*m))
-#     return community, res
                 
 def compute_mod(community, n_edge_dict, edge_dict, m,A_matrix):
     mod_s = 0
@@ -286,13 +247,7 @@ with open(filename,'w') as zailip:
             else:
                 zailip.write("'"+str(a[i])+ "'"+', ')
         zailip.write("\n")
-#     b = community_list[len(community_list)-1]
-#     kk = len(b)
-#     for i in range(kk):
-#         if i == kk-1:
-#             zailip.write(str(b[i]))
-#         else:
-#             zailip.write(str(b[i])+', ')    
+   
 end = time.time()
 print("Duration", end-start)
 
